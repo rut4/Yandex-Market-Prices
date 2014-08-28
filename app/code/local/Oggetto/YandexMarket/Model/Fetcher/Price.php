@@ -61,11 +61,11 @@ class Oggetto_YandexMarket_Model_Fetcher_Price
             if (!is_null($price)) {
                 $product->load($item['entity_id']);
 
+                $price = $this->_convertPriceToBaseCurrency($price);
+
                 if ($product->getFinalPrice() > $price) {
                     $price *= Mage::helper('yandex_market')->getRatioForGreaterPrice();
                 }
-
-                $price = $this->_convertPriceToBaseCurrency($price);
             }
 
             $prices[] = [

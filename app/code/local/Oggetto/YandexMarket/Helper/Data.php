@@ -39,7 +39,7 @@ class Oggetto_YandexMarket_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getAuthorizationKey()
     {
-        return Mage::getStoreConfig('oggetto/yandex_market_price/auth_key');
+        return Mage::getStoreConfig('yandex_market_price/general/ratio_greater_price');
     }
 
     /**
@@ -49,6 +49,6 @@ class Oggetto_YandexMarket_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getRatioForGreaterPrice()
     {
-        return floatval(Mage::getStoreConfig('oggetto/yandex_market_price/ratio_greater_price'));
+        return floatval(Mage::getStoreConfig('yandex_market_price/general/ratio_greater_price'));
     }
 }
