@@ -1,0 +1,15 @@
+{
+    "name": "oggettoweb/yandex_market",
+    "type": "magento-module",
+    "license": "OSL-3.0",
+    "description": "Find product prices on yandex market",
+    "authors":[
+        {
+            "name": "Eduard Paliy",
+            "email": "epaliy@oggettoweb.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
