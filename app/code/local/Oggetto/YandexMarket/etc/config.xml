@@ -105,4 +105,11 @@
             </resources>
         </acl>
     </adminhtml>
+    <phpunit>
+        <suite>
+            <modules>
+                <Oggetto_YandexMarket />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
