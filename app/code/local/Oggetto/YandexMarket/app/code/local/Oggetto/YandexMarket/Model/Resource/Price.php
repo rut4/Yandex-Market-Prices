@@ -23,29 +23,22 @@
  */
 
 /**
- * Product price block
+ * Price model resource
  *
  * @category   Oggetto
  * @package    Oggetto_YandexMarket
- * @subpackage Block
+ * @subpackage Model
  * @author     Eduard Paliy <epaliy@oggettoweb.com>
  */
-class Oggetto_YandexMarket_Block_Product_Price extends Mage_Core_Block_Template
+class Oggetto_YandexMarket_Model_Resource_Price extends Mage_Core_Model_Resource_Db_Abstract
 {
     /**
-     * Get price for product by product id
+     * Initialization with table and Id field name
      *
-     * @param int $productId Product id
-     * @return bool|string
+     * @return void
      */
-    public function getPrice($productId)
+    protected function _construct()
     {
-        /** @var Oggetto_YandexMarket_Model_Price $price */
-        $price = Mage::getModel('yandex_market/price');
-        $price->loadByProductId($productId);
-        if ($price->isExistPrice()) {
-            return $price->getFormattedPrice();
-        }
-        return false;
+        $this->_init('yandex_market/price', 'entity_id');
     }
 }

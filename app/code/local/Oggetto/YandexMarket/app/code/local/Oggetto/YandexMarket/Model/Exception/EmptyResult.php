@@ -23,29 +23,13 @@
  */
 
 /**
- * Product price block
+ * Empty api result exception
  *
  * @category   Oggetto
  * @package    Oggetto_YandexMarket
- * @subpackage Block
+ * @subpackage Model
  * @author     Eduard Paliy <epaliy@oggettoweb.com>
  */
-class Oggetto_YandexMarket_Block_Product_Price extends Mage_Core_Block_Template
+class Oggetto_YandexMarket_Model_Exception_EmptyResult extends Exception
 {
-    /**
-     * Get price for product by product id
-     *
-     * @param int $productId Product id
-     * @return bool|string
-     */
-    public function getPrice($productId)
-    {
-        /** @var Oggetto_YandexMarket_Model_Price $price */
-        $price = Mage::getModel('yandex_market/price');
-        $price->loadByProductId($productId);
-        if ($price->isExistPrice()) {
-            return $price->getFormattedPrice();
-        }
-        return false;
-    }
 }

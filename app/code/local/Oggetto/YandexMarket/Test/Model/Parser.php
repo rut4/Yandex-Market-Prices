@@ -23,65 +23,51 @@
  */
 
 /**
- * Yandex market price model
+ * Parser model test
  *
  * @category   Oggetto
  * @package    Oggetto_YandexMarket
- * @subpackage Model
+ * @subpackage Test
  * @author     Eduard Paliy <epaliy@oggettoweb.com>
  */
-class Oggetto_YandexMarket_Model_Price extends Mage_Catalog_Model_Abstract
+class Oggetto_YandexMarket_Test_Model_Parser extends EcomDev_PHPUnit_Test_Case
 {
-
     /**
-     * Initialization with resource model
+     * Setup session before test
      *
      * @return void
      */
-    protected function _construct()
+    public function setUp()
     {
-        $this->_init('yandex_market/price');
+        $session = $this->getModelMock('core/session', ['start']);
+        $this->replaceByMock('singleton', 'core/session', $session);
     }
 
     /**
-     * Load YM price by product ID
+     * Test parser detects first item link
      *
-     * @param int $productId Product Id
-     * @return Oggetto_YandexMarket_Model_Price
+     * @param string $doc  Document
+     * @param string $link Link of the first item
+     * @dataProvider dataProvider
+     * @return void
      */
-    public function loadByProductId($productId)
+    public function testParsesFirstItemLink($doc, $link)
     {
-        $this->load($productId);
-        return $this;
+        $parser = Mage::getModel('yandex_market/parser');
+        $this->assertEquals($link, $parser->parseFirstItemLink($doc));
     }
 
     /**
-     * Get price representation formatted string
+     * Test parser detects first item link
      *
-     * @return string
+     * @param string $doc   Document
+     * @param string $price Price of the first item
+     * @dataProvider dataProvider
+     * @return void
      */
-    public function getFormattedPrice()
+    public function testParsesFirstItemPrice($doc, $price)
     {
-        return Mage::app()->getStore()->formatPrice($this->_getPrice());
-    }
-
-    /**
-     * Is price available for this product
-     *
-     * @return bool
-     */
-    public function isExistPrice()
-    {
-        return $this->hasValue();
-    }
-
-    /**
-     * Get price for this product
-     *
-     * @return float
-     */
-    protected function _getPrice()
-    {
-        return $this->getValue();
+        $parser = Mage::getModel('yandex_market/parser');
+        $this->assertEquals($price, $parser->parsePrice($doc));
     }
 }
