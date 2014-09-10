@@ -1,0 +1,13 @@
+-
+  prices:
+    -
+      entity_id: 707
+      value: 42
+    -
+      entity_id: 707
+      value: 42
+-
+  prices:
+    -
+      entity_id: 707
+      value: 42

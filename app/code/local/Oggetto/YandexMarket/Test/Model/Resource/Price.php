@@ -23,68 +23,51 @@
  */
 
 /**
- * Parser model test
+ * Price resource model test
  *
  * @category   Oggetto
  * @package    Oggetto_YandexMarket
  * @subpackage Test
  * @author     Eduard Paliy <epaliy@oggettoweb.com>
  */
-class Oggetto_YandexMarket_Test_Model_Parser extends EcomDev_PHPUnit_Test_Case
+class Oggetto_YandexMarket_Test_Model_Resource_Price extends EcomDev_PHPUnit_Test_Case
 {
     /**
-     * Setup session before test
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $session = $this->getModelMock('core/session', ['start']);
-        $this->replaceByMock('singleton', 'core/session', $session);
-    }
-
-    /**
-     * Test parser is available via alias
+     * Test price model resource is available via alias
      *
      * @return void
      */
     public function testIsAvailableViaAlias()
     {
-        $this->assertInstanceOf('Oggetto_YandexMarket_Model_Parser', Mage::getModel('yandex_market/parser'));
-    }
-
-
-    /**
-     * Test parser detects first item link
-     *
-     * @param int    $callNumber Number of test calls
-     * @param string $doc        Document
-     * @dataProvider dataProvider
-     * @loadExpectation
-     * @return void
-     */
-    public function testParsesFirstItemLink($callNumber, $doc)
-    {
-        $this->assertEquals(
-            $this->expected($callNumber)->getFirstItemLink(),
-            Mage::getModel('yandex_market/parser')->parseFirstItemLink($doc)
+        $this->assertInstanceOf(
+            'Oggetto_YandexMarket_Model_Resource_Price',
+            Mage::getResourceModel('yandex_market/price')
         );
     }
 
     /**
-     * Test parser detects first item link
+     * Test price model initializations with main table
      *
-     * @param int    $callNumber Number of test calls
-     * @param string $doc        Document
-     * @dataProvider dataProvider
-     * @loadExpectation
      * @return void
      */
-    public function testParsesFirstItemPrice($callNumber, $doc)
+    public function testInitialisationsWithMainTable()
     {
         $this->assertEquals(
-            $this->expected($callNumber)->getPrice(),
-            Mage::getModel('yandex_market/parser')->parsePrice($doc)
+            'catalog_product_index_price_yandex_market',
+            Mage::getResourceModel('yandex_market/price')->getMainTable()
+        );
+    }
+
+    /**
+     * Test price model initializations with id field name
+     *
+     * @return void
+     */
+    public function testInitialisationsWithIdFieldName()
+    {
+        $this->assertEquals(
+            'entity_id',
+            Mage::getResourceModel('yandex_market/price')->getIdFieldName()
         );
     }
 }

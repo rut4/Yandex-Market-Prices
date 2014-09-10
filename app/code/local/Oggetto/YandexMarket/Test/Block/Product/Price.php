@@ -35,18 +35,20 @@ class Oggetto_YandexMarket_Test_Block_Product_Price extends EcomDev_PHPUnit_Test
     /**
      * Test product price block doesn't return product price when it's unavailable
      *
+     * @param int $productId Product id
+     * @dataProvider dataProvider
      * @return void
      */
-    public function testDoesNotReturnProductPriceWhenItIsUnavailable()
+    public function testDoesNotReturnProductPriceWhenItIsUnavailable($productId)
     {
         $price = $this->getModelMock('yandex_market/price', ['loadByProductId', 'isExistPrice']);
 
-        $price->expects($this->exactly(2))
+        $price->expects($this->once())
             ->method('loadByProductId')
             ->with($this->anything())
             ->will($this->returnSelf());
 
-        $price->expects($this->exactly(2))
+        $price->expects($this->once())
             ->method('isExistPrice')
             ->will($this->returnValue(false));
 
@@ -54,8 +56,7 @@ class Oggetto_YandexMarket_Test_Block_Product_Price extends EcomDev_PHPUnit_Test
 
         $block = new Oggetto_YandexMarket_Block_Product_Price;
 
-        $block->getPrice(1);
-        $block->getPrice(2);
+        $block->getPrice($productId);
     }
 
 }

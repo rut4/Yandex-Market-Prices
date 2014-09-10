@@ -1,0 +1,24 @@
+-
+  prices:
+    -
+      entity_id: 1
+      value: 42
+    -
+      entity_id: 2
+      name: 115
+    -
+      entity_id: 3
+      name: 27
+-
+  prices:
+    -
+      entity_id: 1
+      value: 42
+-
+  prices:
+    -
+      entity_id: 13
+      value: 44
+    -
+      entity_id: 17
+      value: 66

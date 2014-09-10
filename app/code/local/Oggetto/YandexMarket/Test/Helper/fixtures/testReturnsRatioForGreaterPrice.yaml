@@ -1,0 +1,2 @@
+config:
+  stores/admin/yandex_market_price/general/ratio_greater_price: 1.1

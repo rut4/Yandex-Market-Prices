@@ -40,6 +40,21 @@ class Oggetto_YandexMarket_Model_Fetcher_Price
      */
     public function getPricesForNames(array $names)
     {
+        $prices = [];
+        foreach ($names as $item) {
+            $prices[] = $this->getItemPrice($item);
+        }
+        return $prices;
+    }
+
+    /**
+     * Get item price by name
+     *
+     * @param array $item Item
+     * @return null
+     */
+    public function getItemPrice(array $item)
+    {
         /** @var Oggetto_YandexMarket_Model_Api $api */
         $api = Mage::getModel('yandex_market/api', Oggetto_YandexMarket_Model_Api::API_MODE_PARSING);
 
@@ -49,17 +64,9 @@ class Oggetto_YandexMarket_Model_Fetcher_Price
         /** @var Oggetto_YandexMarket_Helper_Data $helper */
         $helper = Mage::helper('yandex_market');
 
-        $prices = [];
-
-        foreach ($names as $item) {
-            try {
-                $price = $api->getAvgPriceByTextSearch($item['name']);
-            } catch (Oggetto_YandexMarket_Model_Exception_EmptyResult $e) {
-                $price = null;
-            } catch (Exception $e) {
-                Mage::logException($e);
-                $price = null;
-            }
+        $price = null;
+        try {
+            $price = $api->getAvgPriceByTextSearch($item['name']);
 
             if (!is_null($price)) {
                 $product->load($item['entity_id']);
@@ -70,12 +77,13 @@ class Oggetto_YandexMarket_Model_Fetcher_Price
                     $price *= $helper->getRatioForGreaterPrice();
                 }
             }
-
-            $prices[] = [
-                'entity_id' => $item['entity_id'],
-                'value'     => $price
-            ];
+        } catch (Oggetto_YandexMarket_Model_Exception_EmptyResult $e) {
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
-        return $prices;
+        return [
+            'entity_id' => $item['entity_id'],
+            'value'     => $price
+        ];
     }
 }

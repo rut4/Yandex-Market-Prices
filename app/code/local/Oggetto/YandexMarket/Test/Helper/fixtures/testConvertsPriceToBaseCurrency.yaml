@@ -1,0 +1,2 @@
+config:
+  stores/admin/currency/options/default: USD

@@ -1,0 +1,2 @@
+config:
+  stores/admin/yandex_market_price/general/auth_key: foobarbaz_!

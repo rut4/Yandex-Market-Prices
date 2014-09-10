@@ -1,0 +1,8 @@
+-
+  price:
+    entity_id: 1
+    value: 42
+-
+  price:
+    entity_id: 400
+    value: 13

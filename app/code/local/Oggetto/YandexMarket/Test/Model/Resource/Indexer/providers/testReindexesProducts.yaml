@@ -1,0 +1,53 @@
+-
+  - 0 # call number
+  -
+    -
+      entity_id: 1
+      name: foo
+    -
+      entity_id: 2
+      name: bar
+    -
+      entity_id: 3
+      name: baz
+  -
+    -
+      entity_id: 1
+      value: 42
+    -
+      entity_id: 2
+      name: 115
+    -
+      entity_id: 3
+      name: 27
+  - null
+-
+  - 1 # call number
+  -
+    -
+      entity_id: 1
+      name: foo
+  -
+    -
+      entity_id: 1
+      value: 42
+  - 1
+-
+  - 2 # call number
+  -
+    -
+      entity_id: 13
+      name: qux
+    -
+      entity_id: 17
+      name: xxx
+  -
+    -
+      entity_id: 13
+      value: 44
+    -
+      entity_id: 17
+      value: 66
+  -
+    - 13
+    - 17

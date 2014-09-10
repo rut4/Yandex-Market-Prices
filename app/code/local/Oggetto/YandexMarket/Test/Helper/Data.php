@@ -33,40 +33,50 @@
 class Oggetto_YandexMarket_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case
 {
     /**
+     * Test helper is available via alias
+     *
+     * @return void
+     */
+    public function testIsAvailableViaAlias()
+    {
+        $this->assertInstanceOf('Oggetto_YandexMarket_Helper_Data', Mage::helper('yandex_market'));
+    }
+
+    /**
      * Test helper returns authorization key
      *
+     * @loadFixture
      * @return void
      */
     public function testReturnsAuthorizationKey()
     {
-        $this->assertEquals(
-            Mage::getStoreConfig('yandex_market_price/general/auth_key'),
-            Mage::helper('yandex_market')->getAuthorizationKey()
-        );
+        $this->assertEquals('foobarbaz_!', Mage::helper('yandex_market')->getAuthorizationKey());
     }
 
     /**
      * Test helper returns ratio for greater price then YM
      *
+     * @loadFixture
      * @return void
      */
     public function testReturnsRatioForGreaterPrice()
     {
-        $this->assertEquals(
-            Mage::getStoreConfig('yandex_market_price/general/ratio_greater_price'),
-            Mage::helper('yandex_market')->getRatioForGreaterPrice()
-        );
+        $this->assertEquals(1.1, Mage::helper('yandex_market')->getRatioForGreaterPrice());
     }
 
     /**
      * Test converts price to base currency
      *
-     * @param int $price Price
+     * @param int $callNumber Number of test calls
+     * @param int $price      Price
      * @dataProvider dataProvider
+     * @loadFixture
      * @return void
      */
-    public function testConvertsPriceToBaseCurrency($price)
+    public function testConvertsPriceToBaseCurrency($callNumber, $price)
     {
+        $this->_mockSession();
+
         $api = $this->getModelMock('yandex_market/api', ['getYmCurrencyCode']);
 
         $api->expects($this->once())
@@ -90,6 +100,17 @@ class Oggetto_YandexMarket_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case
 
         $helper = Mage::helper('yandex_market/data');
 
-        $this->assertEquals($price, $helper->convertPriceToBaseCurrency($price));
+        $this->assertEquals($this->expected($callNumber)->getPrice(), $helper->convertPriceToBaseCurrency($price));
+    }
+
+    /**
+     * Mock session
+     *
+     * @return void
+     */
+    protected function _mockSession()
+    {
+        $session = $this->getModelMock('core/session', ['start']);
+        $this->replaceByMock('model', 'core/session', $session);
     }
 }

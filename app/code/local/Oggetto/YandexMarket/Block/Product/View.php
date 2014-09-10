@@ -23,7 +23,7 @@
  */
 
 /**
- * Product view block
+ * Product price block for rewrite
  *
  * @category   Oggetto
  * @package    Oggetto_YandexMarket

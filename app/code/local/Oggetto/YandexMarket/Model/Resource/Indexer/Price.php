@@ -39,6 +39,7 @@ class Oggetto_YandexMarket_Model_Resource_Indexer_Price extends Mage_Index_Model
      */
     protected function _construct()
     {
+        $this->_init('yandex_market/price', 'entity_id');
         $this->_setResource('yandex_market');
     }
 
@@ -68,18 +69,18 @@ class Oggetto_YandexMarket_Model_Resource_Indexer_Price extends Mage_Index_Model
             $select->where('product.entity_id IN(?)', $productId);
 
             $this->_getIndexAdapter()->delete(
-                $this->getTable('yandex_market/price'),
+                $this->getMainTable(),
                 ['entity_id IN(?)' => $productId]
             );
         } else {
-            $this->_getIndexAdapter()->delete($this->getTable('yandex_market/price'));
+            $this->_getIndexAdapter()->delete($this->getMainTable());
         }
 
-        $result = $this->_getIndexAdapter()->fetchAll($select);
+        $items = $this->_getIndexAdapter()->fetchAll($select);
 
-        $prices = Mage::getModel('yandex_market/fetcher_price')->getPricesForNames($result);
+        $prices = Mage::getModel('yandex_market/fetcher_price')->getPricesForNames($items);
 
-        $this->_getIndexAdapter()->insertMultiple($this->getTable('yandex_market/price'), $prices);
+        $this->_getIndexAdapter()->insertMultiple($this->getMainTable(), $prices);
     }
 
     /**

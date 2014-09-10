@@ -39,7 +39,7 @@ class Oggetto_YandexMarket_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getAuthorizationKey()
     {
-        return Mage::getStoreConfig('yandex_market_price/general/ratio_greater_price');
+        return Mage::getStoreConfig('yandex_market_price/general/auth_key');
     }
 
     /**
@@ -62,7 +62,6 @@ class Oggetto_YandexMarket_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $currentCurrency = Mage::app()->getStore()->getCurrentCurrencyCode();
         $ymCurrency = Mage::getModel('yandex_market/api')->getYmCurrencyCode();
-
         return Mage::app()->getStore()->roundPrice(
             1 / Mage::helper('directory')->currencyConvert(1 / $price, $currentCurrency, $ymCurrency)
         );

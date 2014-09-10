@@ -44,35 +44,43 @@ class Oggetto_YandexMarket_Test_Model_Price extends EcomDev_PHPUnit_Test_Case
     }
 
     /**
-     * Test price loads self by product id
+     * Test price is available via alias
      *
      * @return void
      */
-    public function testLoadsItselfByProductId()
+    public function testIsAvailableViaAlias()
+    {
+        $this->assertInstanceOf('Oggetto_YandexMarket_Model_Price', Mage::getModel('yandex_market/price'));
+    }
+
+    /**
+     * Test price loads self by product id
+     *
+     * @param int $productId Product id
+     * @dataProvider dataProvider
+     * @return void
+     */
+    public function testLoadsItselfByProductId($productId)
     {
         $priceMock = $this->getModelMock('yandex_market/price', ['load']);
 
-        $priceMock->expects($this->at(0))
+        $priceMock->expects($this->once())
             ->method('load')
-            ->with($this->equalTo(42));
+            ->with($this->equalTo($productId));
 
-        $priceMock->expects($this->at(1))
-            ->method('load')
-            ->with($this->equalTo(115));
-
-        $priceMock->loadByProductId(42);
-        $priceMock->loadByProductId(115);
+        $priceMock->loadByProductId($productId);
     }
 
     /**
      * Test price returns formatted price
      *
-     * @param string $price     Product price
-     * @param string $formatted Formatted product price
+     * @param int    $callNumber Number of test calls
+     * @param string $price      Product price
      * @dataProvider dataProvider
+     * @loadExpectation
      * @return void
      */
-    public function testReturnsFormattedPrice($price, $formatted)
+    public function testReturnsFormattedPrice($callNumber, $price)
     {
         $priceMock = $this->getModelMock('yandex_market/price', ['getValue']);
 
@@ -80,24 +88,26 @@ class Oggetto_YandexMarket_Test_Model_Price extends EcomDev_PHPUnit_Test_Case
             ->method('getValue')
             ->will($this->returnValue($price));
 
-        $this->assertEquals($formatted, $priceMock->getFormattedPrice());
+        $this->assertEquals($this->expected($callNumber)->getFormatted(), $priceMock->getFormattedPrice());
     }
 
     /**
      * Test price returns has value
      *
+     * @param int  $callNumber Number of test calls
+     * @param bool $result     Has value result
+     * @dataProvider dataProvider
+     * @loadExpectation
      * @return void
      */
-    public function testReturnsIsExistsPrice()
+    public function testReturnsIsExistsPrice($callNumber, $result)
     {
-        $this->assertFalse(Mage::getModel('yandex_market/price')->isExistPrice());
-
         $price = $this->getModelMock('yandex_market/price', ['hasValue']);
 
         $price->expects($this->once())
             ->method('hasValue')
-            ->will($this->returnValue(true));
+            ->will($this->returnValue($result));
 
-        $this->assertTrue($price->isExistPrice());
+        $this->assertEquals($this->expected($callNumber)->getIsExistPrice(), $price->isExistPrice());
     }
 }

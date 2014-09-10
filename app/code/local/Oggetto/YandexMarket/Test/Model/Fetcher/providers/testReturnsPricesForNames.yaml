@@ -1,7 +1,15 @@
 -
+  - 0
   -
-    - 1
+    -
+      entity_id: 1
+      name: foobar
+    -
+      entity_id: 42
+      name: iphone
+-
+  - 1
   -
-    - product
-  -
-    - 40
+    -
+      entity_id: 400
+      name: google
