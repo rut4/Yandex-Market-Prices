@@ -25,13 +25,13 @@
 -->
 <config>
     <tabs>
-        <oggetto translate="label" module="onepageCheckout">
+        <oggetto translate="label">
             <label>Oggetto Extensions</label>
             <sort_order>100</sort_order>
         </oggetto>
     </tabs>
     <sections>
-        <yandex_market_price translate="label" module="onepageCheckout">
+        <yandex_market_price translate="label">
             <label>Yandex.Market Price</label>
             <tab>oggetto</tab>
             <sort_order>3000</sort_order>
@@ -39,7 +39,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <general translate="label" module="onepageCheckout">
+                <general translate="label">
                     <label>General</label>
                     <sort_order>100</sort_order>
                     <show_in_default>1</show_in_default>
